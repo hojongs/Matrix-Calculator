@@ -30,7 +30,7 @@ Vector backSubstitution(Matrix A, Vector b, int n)
 					for (int k = 0; k < i + 1; k++)
 						fprintf(stdout, "          ");
 					for (int k = i + 1; k < n; k++)
-						fprintf(stdout, "+ %4.1lf*x%d ", -A.data[i][k], k+1);
+						fprintf(stdout, "+ %4.1lf*x%d ", -A.data[i][k]/ A.data[i][i], k+1);
 					fprintf(stdout, "+ %4.1lf \n", b.data[i]);
 				}
 			}
