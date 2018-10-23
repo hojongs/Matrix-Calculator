@@ -1,9 +1,12 @@
 # Matrix Calculator
 # Description
-- 행렬의 행렬식, 역행렬을 계산하는 기능
-- 가우스 조단 소거법을 통해, 선형 시스템의 해를 계산하는 기능
+- 행렬의 행렬식, 역행렬 계산
+- 가우스 조단 소거법을 통해, 선형 시스템의 해 계산
+- You can simplify output result by setting `MATRIX_LOG_ENABLE=false`
+
+## Limit
 - Supports Square Matrix Only (현재 정방 행렬만 지원)
-- Simplify output result by setting MATRIX_LOG_ENABLE=false
+- Max Matrix Size is 8 by 8
 
 ## 기능 리스트
 - matrix의 determinant (행렬식)
@@ -11,6 +14,9 @@
 - Solution of Linear System by Gauss Jordan Elimination (선형 시스템의 해)
 
 ## Input Output Example
+1. Input selection menu number
+2. Input matrix size
+3. Input matrix
 ### Determinant
 #### Input
 ```

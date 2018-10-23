@@ -1,12 +1,5 @@
 /* 2018-2 linear algebra hw */
 
-// TODO
-// Bayes's rule
-// cramer's rule
-// rotate
-// Markov chain, transition matrix
-// Kirchhoff
-
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <string.h>

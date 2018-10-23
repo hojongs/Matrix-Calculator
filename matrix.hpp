@@ -6,7 +6,6 @@
 #define AND &&
 #define OR ||
 #define NOT !
-#define MAX_ARGS_CNT 65536
 
 extern bool MATRIX_LOG_ENABLE;
 
