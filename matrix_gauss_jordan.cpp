@@ -108,7 +108,7 @@ Vector backSubstitution(Matrix A, Vector b, int n)
 						fprintf(stdout, "          ");
 					for (int k = i + 1; k < n; k++)
 						fprintf(stdout, "+ %4.1lf*x%d ", -A.data[i][k] / A.data[i][i], k + 1);
-					fprintf(stdout, "+ %4.1lf \n", b.data[i]);
+					fprintf(stdout, "+ %4.1lf \n", b.data[i] / A.data[i][i]);
 				}
 			}
 		}
