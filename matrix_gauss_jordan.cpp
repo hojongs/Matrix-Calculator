@@ -133,7 +133,12 @@ Vector gaussJordanEliminate(Matrix A, Vector b, int n)
 	{
 		if (MATRIX_LOG_ENABLE) fprintf(stdout, "Trap condition \n");
 	}
-	if (MATRIX_LOG_ENABLE) printLinearSystem(A, b, n);
+	if (MATRIX_LOG_ENABLE)
+	{
+		fprintf(stdout, "\n");
+		fprintf(stdout, "Upper Triangular Matrix \n");
+		printLinearSystem(A, b, n);
+	}
 	return backSubstitution(A, b, n);
 }
 
