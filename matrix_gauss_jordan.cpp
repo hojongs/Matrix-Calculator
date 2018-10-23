@@ -11,7 +11,7 @@ Vector gaussJordanEliminate(Matrix A, Vector b, int n)
 	bool error = false;
 	int pv = 0; // pivot
 
-	while (pv < (n-1) AND NOT error)
+	while (pv < (n-1))
 	{
 		if (MATRIX_LOG_ENABLE) fprintf(stdout, "pivot=R%d \n", pv+1);
 		// if pivot is 0, swap rows
@@ -38,7 +38,11 @@ Vector gaussJordanEliminate(Matrix A, Vector b, int n)
 
 		// eliminates rows
 		if (A.data[pv][pv] == 0)
+		{
+			// pivot row로 elimination 할 것이 없음
+			fprintf(stdout, "\n");
 			error = true;
+		}
 		else
 		{
 			for (int row = pv + 1; row < n; row++)
@@ -66,9 +70,9 @@ Vector gaussJordanEliminate(Matrix A, Vector b, int n)
 	{
 		if (MATRIX_LOG_ENABLE) fprintf(stdout, "Trap condition \n");
 	}
+
 	if (MATRIX_LOG_ENABLE)
 	{
-		fprintf(stdout, "\n");
 		fprintf(stdout, "Upper Triangular Matrix \n");
 		printLinearSystem(A, b, n);
 	}
