@@ -37,13 +37,7 @@ Vector gaussJordanEliminate(Matrix A, Vector b, int n)
 		}
 
 		// eliminates rows
-		if (A.data[pv][pv] == 0)
-		{
-			// pivot row로 elimination 할 것이 없음
-			fprintf(stdout, "\n");
-			error = true;
-		}
-		else
+		if (A.data[pv][pv] != 0)
 		{
 			for (int row = pv + 1; row < n; row++)
 			{
@@ -62,6 +56,12 @@ Vector gaussJordanEliminate(Matrix A, Vector b, int n)
 				}
 			}
 		}
+		else
+		{
+			// 해당 row를 pivot으로 elimination 할 것이 없음
+			fprintf(stdout, "\n");
+			error = true;
+		}
 
 		pv++;
 	}
@@ -76,6 +76,7 @@ Vector gaussJordanEliminate(Matrix A, Vector b, int n)
 		fprintf(stdout, "Upper Triangular Matrix \n");
 		printLinearSystem(A, b, n);
 	}
+
 	return backSubstitution(A, b, n);
 }
 
