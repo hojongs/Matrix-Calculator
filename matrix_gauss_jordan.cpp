@@ -3,75 +3,8 @@
 #include <math.h>
 #include "matrix.hpp"
 
-// 포인터를 리턴하면, null return 가능
-Vector backSubstitution(Matrix A, Vector b, int n)
-{
-	if (fabs(A.data[n - 1][n - 1]) < 1 / 1000000)
-	{
-		printf("Singular Matrix");
-		return initVector(0);
-	}
-
-	Vector x = initVector(n);
-
-	// get x_(n-1)
-	if (A.data[n - 1][n - 1] == 0)
-	{
-		if (b.data[n - 1] == 0)
-		{
-			if (MATRIX_LOG_ENABLE)
-			{
-				fprintf(stdout, "x%d = random number \n", n);
-				
-				for (int i = n - 2; i >= 0; i--)
-				{
-					fprintf(stdout, "x%d = ", i+1);
-
-					for (int k = 0; k < i + 1; k++)
-						fprintf(stdout, "          ");
-					for (int k = i + 1; k < n; k++)
-						fprintf(stdout, "+ %4.1lf*x%d ", -A.data[i][k]/ A.data[i][i], k+1);
-					fprintf(stdout, "+ %4.1lf \n", b.data[i]);
-				}
-			}
-		}
-		else
-			if (MATRIX_LOG_ENABLE) fprintf(stdout, "No solution \n");
-
-		for (int i = n - 1; i >= 0; i--)
-			x.data[i] = NAN;
-
-		// return null
-		return x;
-	}
-	else
-	{
-		x.data[n - 1] = b.data[n - 1] / A.data[n - 1][n - 1];
-
-		// get x_(n-2) ~ x_1
-		for (int i = n - 2; i >= 0; i--)
-		{
-			double sum = 0;
-
-			for (int k = n - 1; k > i; k--)
-			{
-				sum += A.data[i][k] * x.data[k];
-				A.data[i][k] = 0;
-			}
-
-			x.data[i] = (b.data[i] - sum) / A.data[i][i];
-			b.data[i] -= -sum;
-		}
-
-		if (MATRIX_LOG_ENABLE)
-		{
-			fprintf(stdout, "Back substitution result (Diagonal Matrix) \n");
-			printLinearSystem(A, b, n);
-		}
-
-		return x;
-	}
-}
+Vector backSubstitution(Matrix A, Vector b, int n);
+void printEquation(double A[], double b, int n);
 
 Vector gaussJordanEliminate(Matrix A, Vector b, int n)
 {
@@ -142,6 +75,83 @@ Vector gaussJordanEliminate(Matrix A, Vector b, int n)
 	return backSubstitution(A, b, n);
 }
 
+// 포인터를 리턴하면, null return 가능
+Vector backSubstitution(Matrix A, Vector b, int n)
+{
+	if (fabs(A.data[n - 1][n - 1]) < 1 / 1000000)
+	{
+		printf("Singular Matrix");
+		return initVector(0);
+	}
+
+	Vector x = initVector(n);
+
+	// get x_(n-1)
+	if (A.data[n - 1][n - 1] == 0)
+	{
+		if (b.data[n - 1] == 0)
+		{
+			if (MATRIX_LOG_ENABLE)
+			{
+				fprintf(stdout, "x%d = random number \n", n);
+
+				for (int i = n - 2; i >= 0; i--)
+				{
+					fprintf(stdout, "x%d = ", i + 1);
+
+					for (int k = 0; k < i + 1; k++)
+						fprintf(stdout, "          ");
+					for (int k = i + 1; k < n; k++)
+						fprintf(stdout, "+ %4.1lf*x%d ", -A.data[i][k] / A.data[i][i], k + 1);
+					fprintf(stdout, "+ %4.1lf \n", b.data[i]);
+				}
+			}
+		}
+		else
+			if (MATRIX_LOG_ENABLE) fprintf(stdout, "No solution \n");
+
+		for (int i = n - 1; i >= 0; i--)
+			x.data[i] = NAN;
+
+		// return null
+		return x;
+	}
+	else
+	{
+		x.data[n - 1] = b.data[n - 1] / A.data[n - 1][n - 1];
+
+		// get x_(n-2) ~ x_1
+		for (int i = n - 2; i >= 0; i--)
+		{
+			double sum = 0;
+
+			for (int k = n - 1; k > i; k--)
+			{
+				sum += A.data[i][k] * x.data[k];
+				A.data[i][k] = 0;
+			}
+
+			x.data[i] = (b.data[i] - sum) / A.data[i][i];
+			b.data[i] -= -sum;
+		}
+
+		if (MATRIX_LOG_ENABLE)
+		{
+			fprintf(stdout, "Back substitution result (Diagonal Matrix) \n");
+			printLinearSystem(A, b, n);
+		}
+
+		return x;
+	}
+}
+
+void printLinearSystem(Matrix A, Vector b, int n)
+{
+	for (int i = 0; i < n; i++)
+		printEquation(A.data[i], b.data[i], n);
+	printf("\n");
+}
+
 void printEquation(double A[], double b, int n)
 {
 	printf("[ ");
@@ -151,11 +161,4 @@ void printEquation(double A[], double b, int n)
 	}
 	printf(" | ");
 	printf("%+8.1lf ] \n", b);
-}
-
-void printLinearSystem(Matrix A, Vector b, int n)
-{
-	for (int i = 0; i < n; i++)
-		printEquation(A.data[i], b.data[i], n);
-	printf("\n");
 }
