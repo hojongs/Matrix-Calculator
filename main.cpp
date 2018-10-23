@@ -99,7 +99,7 @@ void inputLinearSystem(Matrix* A, Vector* b, int n)
 
 	for (int i = 0; i < n; i++)
 	{
-		fprintf(stdout, "equation %d : ", i);
+		fprintf(stdout, "equation %d : ", i+1);
 		inputEquation(A->data[i], &b->data[i], n);
 	}
 }
